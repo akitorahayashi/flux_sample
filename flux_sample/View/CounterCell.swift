@@ -48,6 +48,17 @@ class CounterCell: UITableViewCell {
         decrementButton.addTarget(self, action: #selector(decrementButtonTapped), for: .touchUpInside)
         decrementButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(decrementButton)
+        
+        NSLayoutConstraint.activate([
+            labelStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            labelStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            incrementButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            incrementButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            decrementButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            decrementButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
     }
     
     required init?(coder: NSCoder) {
@@ -57,7 +68,18 @@ class CounterCell: UITableViewCell {
     @objc private func incrementButtonTapped() {
         incrementAction?()
     }
+    
     @objc private func decrementButtonTapped() {
         decrementAction?()
+    }
+    
+    func configure(name: String?, count: Int) {
+        if let name = name {
+            nameLabel.text = name
+            nameLabel.isHidden = false
+        } else {
+            nameLabel.isHidden = true
+        }
+        countLabel.text = "\(count)"
     }
 }
